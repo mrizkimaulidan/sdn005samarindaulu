@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Hasil TKA 2026 - SD Negeri 005 Samarinda Ulu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .search-card {
+            transition: all 0.2s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-6 md:py-10 max-w-3xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-5 md:p-6 border-t-4 border-indigo-600">
+                <div class="flex justify-center mb-2">
+                    <div class="bg-indigo-100 p-2 rounded-full w-12 h-12 flex items-center justify-center">
+                        <i class="fa fa-graduation-cap text-indigo-700 text-2xl"></i>
+                    </div>
+                </div>
+                <h1 class="text-xl md:text-2xl font-extrabold text-gray-800 tracking-tight">
+                    HASIL TES KEMAMPUAN AKADEMIK (TKA)
+                </h1>
+                <p class="text-gray-500 text-sm mt-1">Tahun Pelajaran 2025/2026</p>
+                <div class="mt-3 bg-gray-50 p-3 rounded-xl inline-block w-full md:w-auto">
+                    <p class="font-semibold text-gray-800">SD Negeri 005 Samarinda Ulu</p>
+                    <p class="text-xs text-gray-500">NPSN: 30401343 | KOTA SAMARINDA, KALIMANTAN TIMUR</p>
+                    <p class="text-xs text-gray-400 mt-1">Kepala Satuan Pendidikan: Sumaryanto, S.Pd</p>
+                </div>
+            </div>
+
+            <!-- Panel Pencarian -->
+            <div class="bg-white rounded-2xl shadow-xl p-5 mt-6 search-card">
+                <label class="block text-gray-700 font-medium mb-2 text-left flex items-center gap-2">
+                    <i class="fa fa-id-card text-indigo-500"></i>
+                    <span>Masukkan Nomor Peserta <span class="text-xs text-gray-400">atau</span> NISN</span>
+                </label>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="cariInput"
+                        placeholder="Contoh: T1-26-16-01-0005-0001-8  atau  3130968209  atau 0131562471"
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-gray-50">
+                    <button id="btnCari"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl transition flex items-center justify-center gap-2 font-semibold shadow-md">
+                        <i class="fa fa-search"></i> Cari Data
+                    </button>
+                </div>
+                <p class="text-left text-xs text-gray-400 mt-2 ml-1">
+                    <i class="fa fa-info-circle"></i> Masukkan nomor peserta lengkap (format T1-26-...) atau NISN (10
+                    digit, termasuk angka 0 di depan).
+                </p>
+            </div>
+        </div>
+
+        <!-- Hasil Pencarian -->
+        <div id="hasilContainer" class="hidden transition-all duration-300">
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+                <div class="bg-gradient-to-r from-indigo-700 to-blue-700 px-6 py-4">
+                    <h2 class="text-white font-bold text-xl flex items-center gap-2">
+                        <i class="fa fa-user-circle-o"></i> Profil & Nilai Peserta
+                    </h2>
+                </div>
+                <div class="p-5 md:p-7 space-y-5">
+                    <!-- Data diri grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
+                        <div class="bg-gray-50 p-3 rounded-xl">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide">Nama Lengkap</p>
+                            <p id="namaPeserta" class="font-bold text-gray-800 text-lg break-words"></p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-xl">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide">Nomor Peserta</p>
+                            <p id="noPeserta" class="font-mono text-sm font-semibold text-gray-800 break-all"></p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-xl">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide">NISN</p>
+                            <p id="nisnPeserta" class="font-mono font-medium text-gray-800"></p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-xl">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide">Tempat, Tanggal Lahir</p>
+                            <p id="ttlPeserta" class="font-medium text-gray-800"></p>
+                        </div>
+                    </div>
+
+                    <!-- Nilai -->
+                    <div>
+                        <h3 class="font-bold text-gray-700 border-l-4 border-indigo-500 pl-3 mb-4 text-lg">Hasil Ujian
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <!-- Matematika -->
+                            <div
+                                class="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-5 border border-emerald-200 shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <p class="text-emerald-800 font-semibold text-sm"><i
+                                            class="fa fa-calculator mr-1"></i> MATEMATIKA</p>
+                                    <span
+                                        class="text-xs bg-white px-2 py-1 rounded-full text-emerald-700 shadow-sm">Skor
+                                        Akhir</span>
+                                </div>
+                                <p id="nilaiMat" class="text-4xl font-black text-emerald-700 tracking-tight"></p>
+                                <p id="ketMat" class="text-sm text-gray-600 mt-2"></p>
+                            </div>
+                            <!-- Bahasa Indonesia -->
+                            <div
+                                class="bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl p-5 border border-sky-200 shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <p class="text-blue-800 font-semibold text-sm"><i class="fa fa-book mr-1"></i>
+                                        BAHASA INDONESIA</p>
+                                    <span class="text-xs bg-white px-2 py-1 rounded-full text-blue-700 shadow-sm">Skor
+                                        Akhir</span>
+                                </div>
+                                <p id="nilaiBindo" class="text-4xl font-black text-blue-700 tracking-tight"></p>
+                                <p id="ketBindo" class="text-sm text-gray-600 mt-2"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-center text-xs text-gray-400 border-t pt-4">
+                        <i class="fa fa-check-circle-o text-green-500"></i> Data sesuai dengan hasil TKA 2026
+                        <span class="mx-1">•</span> SD Negeri 005 Samarinda Ulu
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pesan tidak ditemukan -->
+        <div id="tidakDitemukan"
+            class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center shadow-md mt-4">
+            <i class="fa fa-frown-o text-4xl text-amber-500 mb-2"></i>
+            <p class="font-semibold text-amber-800 text-lg">Data Tidak Ditemukan</p>
+            <p class="text-amber-700 text-sm mt-1">Pastikan Nomor Peserta atau NISN yang Anda masukkan sesuai dengan
+                format.</p>
+            <p class="text-amber-600 text-xs mt-2">Contoh nomor peserta: T1-26-16-01-0005-0001-8 | Contoh NISN:
+                3130968209, 0131562471</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-xs text-gray-500 mt-10 border-t border-gray-200 pt-5 space-y-2">
+            <p>© 2026 Kementerian Pendidikan Dasar dan Menengah • Hasil TKA Valid</p>
+            <p>SD Negeri 005 Samarinda Ulu - Samarinda, Kalimantan Timur</p>
+            <p class="text-gray-400">
+                * Sumber data:
+                <a href="https://tka.kemendikdasmen.go.id" target="_blank" rel="noopener noreferrer"
+                    class="text-indigo-500 hover:text-indigo-700 hover:underline transition">
+                    tka.kemendikdasmen.go.id
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // DATA LENGKAP SISWA (107 peserta) - BERDASARKAN TABEL YANG DIBERIKAN
+        // NISN sudah dalam format string dengan leading zero jika ada
+        // ================================================================
+        const dataSiswa = [
+            { peserta: "T1-26-16-01-0005-0001-8", nisn: "3130968209", nama: "MUHAMMAD KHALILURRAHMAN", ttl: "Samarinda, 31 Desember 2013", mtk: 40.00, bindo: 40.00, ket_mtk: "Memadai", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0002-7", nisn: "3135289846", nama: "RADITYA KAKA YUDHISTIRA", ttl: "Samarinda, 2 Oktober 2013", mtk: 36.67, bindo: 60.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0003-6", nisn: "0131562471", nama: "CHALISTA MICHAELA QANAYA AZAKHA", ttl: "Samarinda, 29 Desember 2013", mtk: 53.33, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0004-5", nisn: "0144064636", nama: "REINISSA AJENG PRAMESTI", ttl: "Samarinda, 20 Juni 2014", mtk: 63.33, bindo: 70.00, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0005-4", nisn: "3134600354", nama: "NABILA CAESAR SYAHRAN", ttl: "SAMARINDA, 8 Desember 2013", mtk: 30.00, bindo: 66.67, ket_mtk: "Kurang", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0006-3", nisn: "0135303819", nama: "AFKAR AZZAMY SYAUQI", ttl: "Samarinda, 27 Juni 2013", mtk: 43.33, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0007-2", nisn: "3134711457", nama: "MUHAMAD ZIDAN DARLIS SETIAWAN", ttl: "Samarinda, 29 Mei 2013", mtk: 40.00, bindo: 80.00, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0008-9", nisn: "0136643312", nama: "RISTIQAH SAFIRA", ttl: "Salojampu, 15 Desember 2013", mtk: 70.00, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0009-8", nisn: "0134993178", nama: "ELDINA SYIFA ANINDYA", ttl: "Samarinda, 1 April 2013", mtk: 53.33, bindo: 76.67, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0010-7", nisn: "3145013532", nama: "KENZO RAJENDRA ATHARIZZ", ttl: "SAMARINDA, 9 Mei 2014", mtk: 70.00, bindo: 56.67, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0011-6", nisn: "0143796265", nama: "ZAHRA ASYIFA ELIYANTI", ttl: "Samarinda, 2 Maret 2014", mtk: 60.00, bindo: 73.33, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0012-5", nisn: "3137769251", nama: "FADHILLAH AZZAHRA", ttl: "Samarinda, 24 Mei 2013", mtk: 66.67, bindo: 73.33, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0013-4", nisn: "0131082221", nama: "AQILA ERRI RAHMADANI", ttl: "SAMARINDA, 31 Juli 2013", mtk: 70.00, bindo: 90.00, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0014-3", nisn: "0137084500", nama: "MOCHAMMAD RAYHAND FERDYANSYAH", ttl: "Samarinda, 30 Agustus 2013", mtk: 43.33, bindo: 36.67, ket_mtk: "Memadai", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0015-2", nisn: "3134986776", nama: "FULVIAN AZKA SAPUTRA", ttl: "Samarinda, 24 November 2013", mtk: 66.67, bindo: 83.33, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0016-9", nisn: "0149065962", nama: "SYAQILLA PUTRI AZZAHRA", ttl: "Samarinda, 26 Januari 2014", mtk: 70.00, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0017-8", nisn: "3137476682", nama: "MUHAMMAD ALIF HANAFI", ttl: "Samarinda, 13 September 2013", mtk: 43.33, bindo: 23.33, ket_mtk: "Memadai", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0018-7", nisn: "0136676101", nama: "MUHAMMAD AL ZBIEQQRI", ttl: "Samarinda, 11 Desember 2013", mtk: 40.00, bindo: 53.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0019-6", nisn: "3138127004", nama: "MUHAMMAD ANDRE RAMADHAN", ttl: "Samarinda, 23 Juli 2013", mtk: 46.67, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0020-5", nisn: "3131189744", nama: "ANDRIA PRASTASI CINTA RAFAEL", ttl: "Samarinda, 14 April 2013", mtk: 46.67, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0021-4", nisn: "0133100073", nama: "ABDUL AKBAR", ttl: "Samarinda, 8 Agustus 2013", mtk: 50.00, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0022-3", nisn: "0123180630", nama: "FIKRI DIAN SAPUTRA", ttl: "SAMARINDA, 23 Oktober 2012", mtk: 26.67, bindo: 46.67, ket_mtk: "Kurang", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0023-2", nisn: "3139018144", nama: "NAZWA KHANZA AZAHRA", ttl: "Samarinda, 18 Juni 2013", mtk: 33.33, bindo: 63.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0024-9", nisn: "3134394886", nama: "NURUS SYIFA INAYAH", ttl: "Samarinda, 8 Desember 2013", mtk: 66.67, bindo: 86.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0025-8", nisn: "0144062386", nama: "UZMA QISYA AULIA", ttl: "Samarinda, 16 Agustus 2014", mtk: 60.00, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0026-7", nisn: "3130940878", nama: "ABIDAH SALWA DANIYAH RAHMA", ttl: "Samarinda, 8 Juni 2013", mtk: 56.67, bindo: 83.33, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0027-6", nisn: "0133861602", nama: "ADILLA AURA PUTRI", ttl: "Lampung utara, 4 Desember 2013", mtk: 46.67, bindo: 53.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0028-5", nisn: "3147431923", nama: "DWI RADITYA", ttl: "Samarinda, 2 Mei 2014", mtk: 56.67, bindo: 63.33, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0029-4", nisn: "3139599308", nama: "RHISYA ADELLIA", ttl: "Samarinda, 26 Januari 2013", mtk: 26.67, bindo: 50.00, ket_mtk: "Kurang", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0030-3", nisn: "3137384917", nama: "ELZA NABILA ZHU FAIRAH", ttl: "Samarinda, 7 Mei 2013", mtk: 43.33, bindo: 73.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0031-2", nisn: "0147557864", nama: "RAZIQ HANAN MAULANA", ttl: "Samarinda, 10 Februari 2014", mtk: 26.67, bindo: 80.00, ket_mtk: "Kurang", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0032-9", nisn: "3135204681", nama: "CHAYRA FAYYOLA NADIFA", ttl: "SAMARINDA, 8 Desember 2013", mtk: 43.33, bindo: 50.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0033-8", nisn: "3144940791", nama: "MUHAMMAD AL GAZALI", ttl: "SAMARINDA, 12 April 2014", mtk: 43.33, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0034-7", nisn: "3135774301", nama: "ANISAH", ttl: "Samarinda, 25 Juni 2013", mtk: 50.00, bindo: 60.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0035-6", nisn: "0135082073", nama: "REIZA OCTHAWARDANA", ttl: "Samarinda, 11 Oktober 2013", mtk: 53.33, bindo: 83.33, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0036-5", nisn: "0144897022", nama: "TIKA ULUL AULIA", ttl: "Sumbek, 4 Januari 2014", mtk: 40.00, bindo: 73.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0037-4", nisn: "3136768569", nama: "FIKY PUTRA PRATAMA", ttl: "Samarinda, 4 Januari 2013", mtk: 66.67, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0038-3", nisn: "0134239491", nama: "MUHAMMAD RAFKHA AL-FARIZKI", ttl: "Samarinda, 12 Februari 2013", mtk: 46.67, bindo: 56.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0039-2", nisn: "3134774151", nama: "MAKHZAM RAMADHAN AMRULLAH SUYONO", ttl: "Samarinda, 18 Juli 2013", mtk: 23.33, bindo: 40.00, ket_mtk: "Kurang", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0040-9", nisn: "3138450724", nama: "LAILY RAMADHANI", ttl: "Samarinda, 29 Juli 2013", mtk: 33.33, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0041-8", nisn: "0146696774", nama: "GUSTI NAZWA ASSHYFA", ttl: "Samarinda, 24 Mei 2014", mtk: 70.00, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0042-7", nisn: "3141215812", nama: "SITI FAIZAH", ttl: "Samarinda, 20 Juni 2014", mtk: 43.33, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0043-6", nisn: "0122357833", nama: "VALENTINA AYU", ttl: "Samarinda, 4 Agustus 2013", mtk: 40.00, bindo: 63.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0044-5", nisn: "3134676445", nama: "KINARA DESTINA PUTRI", ttl: "Samarinda, 7 Desember 2013", mtk: 70.00, bindo: 80.00, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0045-4", nisn: "3141653451", nama: "KUMAIRA AZSHARA", ttl: "Samarinda, 5 Juni 2014", mtk: 50.00, bindo: 73.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0046-3", nisn: "0148207224", nama: "BAYU RIZKY ADITYA", ttl: "Samarinda, 2 Februari 2014", mtk: 46.67, bindo: 93.33, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0047-2", nisn: "0141220480", nama: "BILQIS AMELIA PERMATA QOHAR", ttl: "Samarinda, 23 Februari 2014", mtk: 56.67, bindo: 73.33, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0048-9", nisn: "3133628524", nama: "ADIBA KANZA SAPUTRI", ttl: "SAMARINDA, 11 Juni 2013", mtk: 43.33, bindo: 90.00, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0049-8", nisn: "0131249764", nama: "NOUFAL ANUGERAH", ttl: "Samarinda, 19 November 2013", mtk: 23.33, bindo: 60.00, ket_mtk: "Kurang", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0050-7", nisn: "3140285704", nama: "MUH. AL-IKHSAN", ttl: "TINGKARA, 15 Maret 2014", mtk: 33.33, bindo: 60.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0051-6", nisn: "0139238117", nama: "AJENG FARADIBA SALAM", ttl: "Samarinda, 16 September 2013", mtk: 46.67, bindo: 73.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0052-5", nisn: "0141534927", nama: "MUHAMAD TRI PUTRA APRILIANTO", ttl: "Samarinda, 30 April 2014", mtk: 36.67, bindo: 36.67, ket_mtk: "Memadai", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0053-4", nisn: "3136753326", nama: "LIVIA ZAHRA TRYA RAHADI", ttl: "Samarinda, 13 Agustus 2013", mtk: 40.00, bindo: 80.00, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0054-3", nisn: "0135704809", nama: "MUHAMMAD FATHIR AL AFKAR", ttl: "Samarinda, 27 Oktober 2013", mtk: 26.67, bindo: 56.67, ket_mtk: "Kurang", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0055-2", nisn: "3131302351", nama: "DZAKIYA TALITA SAKHI SAMSUDIN", ttl: "Samarinda, 8 Desember 2013", mtk: 63.33, bindo: 70.00, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0056-9", nisn: "0136938767", nama: "AHMAD ALLAFA RIZKY AARON ARGA", ttl: "Samarinda, 10 Oktober 2013", mtk: 26.67, bindo: 23.33, ket_mtk: "Kurang", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0057-8", nisn: "3139179778", nama: "NAYLA JAVIRA RAMADHANI", ttl: "Samarinda, 3 Agustus 2013", mtk: 60.00, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0058-7", nisn: "3130081214", nama: "ALBI LUTFY PAHRY", ttl: "Samarinda, 25 Mei 2013", mtk: 46.67, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0059-6", nisn: "0137001315", nama: "DZAKIR ALMAIR KHAFADI", ttl: "Samarinda, 18 Oktober 2013", mtk: 56.67, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0060-5", nisn: "3136861425", nama: "MUHAMMAD AQIL MUFID", ttl: "Samarinda, 18 Agustus 2013", mtk: 56.67, bindo: 80.00, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0061-4", nisn: "3146398389", nama: "NAYLA AZZAHRA", ttl: "Samarinda, 7 Februari 2014", mtk: 33.33, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0062-3", nisn: "3135280077", nama: "MUHAMMAD NUR IQSAN", ttl: "Samarinda, 5 Juli 2013", mtk: 53.33, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0063-2", nisn: "3147024523", nama: "NATASYA PUTRI", ttl: "Samarinda, 28 Mei 2014", mtk: 56.67, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0064-9", nisn: "3144826281", nama: "MUHAMMAD RIDZAL MAULANA", ttl: "Samarinda, 20 Januari 2014", mtk: 63.33, bindo: 73.33, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0065-8", nisn: "0139033488", nama: "RICHARD OCTAVIANO", ttl: "Samarinda, 27 Oktober 2013", mtk: 43.33, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0066-7", nisn: "3132747708", nama: "ANINDITA PUTRI MULIA", ttl: "SAMARINDA, 23 September 2013", mtk: 70.00, bindo: 73.33, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0067-6", nisn: "0136250231", nama: "AL-RIZKY RAMADHANI", ttl: "Samarinda, 5 Agustus 2013", mtk: 53.33, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0068-5", nisn: "3133648892", nama: "MEGANANDA NAUFAL SUSANTO", ttl: "Samarinda, 10 Desember 2013", mtk: 40.00, bindo: 96.67, ket_mtk: "Memadai", ket_bindo: "Baik - Istimewa" },
+            { peserta: "T1-26-16-01-0005-0069-4", nisn: "3148140984", nama: "AQILA SANAOMI PUTRI", ttl: "Samarinda, 27 Januari 2014", mtk: 60.00, bindo: 63.33, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0070-3", nisn: "0137728488", nama: "QUENNA NATASYA FEBRIYATI", ttl: "KEDIRI, 24 Februari 2013", mtk: 40.00, bindo: 80.00, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0071-2", nisn: "3140075742", nama: "ALINI ANINDITA KHAIRINNISWA", ttl: "Samarinda, 4 Maret 2014", mtk: 90.00, bindo: 76.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0072-9", nisn: "3136691999", nama: "LAILATUL BATRIYAH", ttl: "SAMARINDA, 14 Maret 2014", mtk: 30.00, bindo: 43.33, ket_mtk: "Kurang", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0073-8", nisn: "3145799981", nama: "MUHAMMAD ILHAM TESAN", ttl: "Polewali Mandar, 1 Mei 2014", mtk: 30.00, bindo: 60.00, ket_mtk: "Kurang", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0074-7", nisn: "0137999898", nama: "ASHIFA APRILIANA", ttl: "Samarinda, 25 April 2013", mtk: 23.33, bindo: 80.00, ket_mtk: "Kurang", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0075-6", nisn: "0137076754", nama: "MICHAEL GILBERT SILITONGA", ttl: "KISARAN, 9 November 2013", mtk: 60.00, bindo: 80.00, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0076-5", nisn: "3133465531", nama: "KIRANA ADINDA", ttl: "Bandung, 25 April 2013", mtk: 30.00, bindo: 66.67, ket_mtk: "Kurang", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0077-4", nisn: "3132227542", nama: "NAMIKA ANANDITA PRASETYA", ttl: "Samarinda, 18 Desember 2013", mtk: 86.67, bindo: 90.00, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0078-3", nisn: "0139952524", nama: "MINAZRAH PUTRI ASKYAH", ttl: "Samarinda, 26 Oktober 2013", mtk: 43.33, bindo: 56.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0079-2", nisn: "0136763118", nama: "MUHAMMAD RAIHAN WAHYU WIJAYA", ttl: "Samarinda, 28 November 2013", mtk: 70.00, bindo: 86.67, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0080-9", nisn: "3134773993", nama: "ALFIAN RIZKI ANNAZIH", ttl: "Samarinda, 21 September 2013", mtk: 30.00, bindo: 40.00, ket_mtk: "Kurang", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0081-8", nisn: "3137590865", nama: "NUR AZAHRA", ttl: "Samarinda, 26 Juni 2013", mtk: 43.33, bindo: 76.67, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0082-7", nisn: "3135368023", nama: "ZIDAN APRILIO ALVARO", ttl: "Gilireng, 23 April 2013", mtk: 60.00, bindo: 70.00, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0083-6", nisn: "3134143635", nama: "MUHAMMAD IQBAL WAKOS SAPUTRA", ttl: "Samarinda, 9 Mei 2013", mtk: 40.00, bindo: 60.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0084-5", nisn: "3137873745", nama: "DANISH NOUVAL RAHMAN", ttl: "Samarinda, 23 Maret 2013", mtk: 46.67, bindo: 73.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0085-4", nisn: "0139655458", nama: "MUHAMMAD WAHYU ROFI'I", ttl: "Samarinda, 4 Maret 2013", mtk: 60.00, bindo: 80.00, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0086-3", nisn: "0137977159", nama: "ZIYAN RAHMAN", ttl: "Samarinda, 16 Desember 2013", mtk: 50.00, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0087-2", nisn: "3139051096", nama: "AKIFA OKTAVIANI NOVERANICA", ttl: "Samarinda, 11 November 2013", mtk: 33.33, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0088-9", nisn: "3133595850", nama: "MUHAMMAD SAFARUDDIN", ttl: "MUARA MUNTAI, 19 Desember 2013", mtk: 53.33, bindo: 60.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0089-8", nisn: "3121763988", nama: "FITRI SITIDIANI", ttl: "Samarinda, 10 Oktober 2012", mtk: 43.33, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0090-7", nisn: "3131899235", nama: "MIKHAYLA ZARA SAFIYA CHANIAGO", ttl: "Samarinda, 4 September 2013", mtk: 70.00, bindo: 93.33, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0091-6", nisn: "3135265960", nama: "HAFIDZAH NADIRA QAIRINA", ttl: "Samarinda, 13 September 2013", mtk: 30.00, bindo: 56.67, ket_mtk: "Kurang", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0092-5", nisn: "0146814530", nama: "AJENG KHALISA MAHARANI", ttl: "Samarinda, 11 Januari 2014", mtk: 46.67, bindo: 66.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0093-4", nisn: "0145262420", nama: "YUSRIYYAH MAULIDIA", ttl: "Samarinda, 21 Januari 2014", mtk: 46.67, bindo: 70.00, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0094-3", nisn: "3129398321", nama: "AULIA AZZAHRA RAMADHANI", ttl: "Samarinda, 25 Juli 2012", mtk: 53.33, bindo: 63.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0095-2", nisn: "0159393361", nama: "MELISA RISTABEL HARGINATA RANUM", ttl: "Samarinda, 2 Mei 2013", mtk: 33.33, bindo: 40.00, ket_mtk: "Memadai", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0096-9", nisn: "3147399673", nama: "MUHAMMAD DZIKRI", ttl: "Samarinda, 6 Januari 2014", mtk: 26.67, bindo: 83.33, ket_mtk: "Kurang", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0097-8", nisn: "0138365566", nama: "RAIHAN ALFATIH", ttl: "Samarinda, 22 Oktober 2013", mtk: 26.67, bindo: 76.67, ket_mtk: "Kurang", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0098-7", nisn: "0131013870", nama: "YURIS KHARISMA ALFARUQ", ttl: "Samarinda, 12 Februari 2013", mtk: 33.33, bindo: 53.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0099-6", nisn: "0138677372", nama: "WILDAN NUR AKMAL EFFENDI", ttl: "Samarinda, 3 Januari 2013", mtk: 30.00, bindo: 33.33, ket_mtk: "Kurang", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0100-5", nisn: "3136445302", nama: "MUHAMMAD LATHIF", ttl: "Samarinda, 22 September 2013", mtk: 33.33, bindo: 73.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0101-4", nisn: "3138235514", nama: "CINTARA SHAKIRA JATMIKA", ttl: "samarinda, 22 Maret 2013", mtk: 46.67, bindo: 56.67, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0102-3", nisn: "3134189219", nama: "YASMIN ALMIRA", ttl: "Samarinda, 28 September 2013", mtk: 70.00, bindo: 93.33, ket_mtk: "Baik", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0103-2", nisn: "3130368770", nama: "MUHAMMAD RIZIK MIFTAHUL ARIFIN", ttl: "Bangkalan, 6 Juni 2013", mtk: 43.33, bindo: 63.33, ket_mtk: "Memadai", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0104-9", nisn: "3149962735", nama: "FARREL NUR HUDA", ttl: "Samarinda, 18 Februari 2014", mtk: 30.00, bindo: 40.00, ket_mtk: "Kurang", ket_bindo: "Kurang" },
+            { peserta: "T1-26-16-01-0005-0105-8", nisn: "3146055937", nama: "PEBRI MAULANA", ttl: "KUTAI TIMUR, 10 Februari 2014", mtk: 43.33, bindo: 83.33, ket_mtk: "Memadai", ket_bindo: "Baik" },
+            { peserta: "T1-26-16-01-0005-0106-7", nisn: "0131451401", nama: "MUHAMMAD FISABILLLAH AL-QADR", ttl: "Samarinda, 21 Oktober 2013", mtk: 73.33, bindo: 70.00, ket_mtk: "Baik", ket_bindo: "Memadai" },
+            { peserta: "T1-26-16-01-0005-0107-6", nisn: "0137115013", nama: "MUHAMMAD ADYA LANGIT RAMADHAN", ttl: "Samarinda, 29 Juli 2013", mtk: 43.33, bindo: 93.33, ket_mtk: "Memadai", ket_bindo: "Baik" }
+        ];
+
+        // Fungsi pencarian (case-insensitive untuk peserta, exact match untuk NISN)
+        function cariData() {
+            let inputVal = document.getElementById('cariInput').value.trim();
+            if (inputVal === "") return;
+
+            // Cari berdasarkan Nomor Peserta (case-insensitive) atau NISN (exact match)
+            const found = dataSiswa.find(s =>
+                s.peserta.toLowerCase() === inputVal.toLowerCase() ||
+                s.nisn === inputVal
+            );
+
+            const hasilDiv = document.getElementById('hasilContainer');
+            const notFoundDiv = document.getElementById('tidakDitemukan');
+
+            hasilDiv.classList.add('hidden');
+            notFoundDiv.classList.add('hidden');
+
+            if (found) {
+                document.getElementById('namaPeserta').innerText = found.nama;
+                document.getElementById('noPeserta').innerText = found.peserta;
+                document.getElementById('nisnPeserta').innerText = found.nisn;
+                document.getElementById('ttlPeserta').innerText = found.ttl;
+                document.getElementById('nilaiMat').innerHTML = `${found.mtk.toFixed(2)}`;
+                document.getElementById('ketMat').innerHTML = `<span class="inline-flex items-center gap-1"><i class="fa fa-tag text-emerald-600"></i> Kategori: ${found.ket_mtk}</span>`;
+                document.getElementById('nilaiBindo').innerHTML = `${found.bindo.toFixed(2)}`;
+                document.getElementById('ketBindo').innerHTML = `<span class="inline-flex items-center gap-1"><i class="fa fa-tag text-blue-600"></i> Kategori: ${found.ket_bindo}</span>`;
+
+                hasilDiv.classList.remove('hidden');
+                hasilDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                notFoundDiv.classList.remove('hidden');
+                notFoundDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        document.getElementById('btnCari').addEventListener('click', cariData);
+        document.getElementById('cariInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') cariData();
+        });
+    </script>
+</body>
+
+</html>
